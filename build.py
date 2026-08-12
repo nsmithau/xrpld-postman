@@ -174,12 +174,11 @@ account_methods = [
 ledger_methods = [
     request("ledger", "ledger", {
         "ledger_index": "validated",
-        "accounts": False,
-        "full": False,
         "transactions": False,
         "expand": False,
         "owner_funds": False,
-    }, "Retrieves information about the public ledger."),
+    }, "Retrieves information about the public ledger. (The admin-only `accounts` and `full` "
+       "fields are deprecated and intentionally omitted.)"),
     request("ledger_closed", "ledger_closed", {},
         "Returns the unique identifiers of the most recently closed ledger."),
     request("ledger_current", "ledger_current", {},

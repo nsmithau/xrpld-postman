@@ -312,10 +312,10 @@
                                         "{{XRPLD_JSONRPC_URL}}"
                                     ]
                                 },
-                                "description": "Retrieves information about the public ledger.",
+                                "description": "Retrieves information about the public ledger. (The admin-only `accounts` and `full` fields are deprecated and intentionally omitted.)",
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n  \"method\": \"ledger\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": \"validated\",\n      \"accounts\": false,\n      \"full\": false,\n      \"transactions\": false,\n      \"expand\": false,\n      \"owner_funds\": false\n    }\n  ]\n}",
+                                    "raw": "{\n  \"method\": \"ledger\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": \"validated\",\n      \"transactions\": false,\n      \"expand\": false,\n      \"owner_funds\": false\n    }\n  ]\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
