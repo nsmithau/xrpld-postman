@@ -1,0 +1,2073 @@
+{
+    "info": {
+        "name": "XRPLD & Clio JSON-RPC API (v2)",
+        "description": "Postman collection for the xrpld (rippled) and Clio JSON-RPC APIs. Every request sends `\"api_version\": 2`.\n\nSelect an environment (Mainnet / Testnet / Devnet) to switch networks \u2014 it sets:\n- `XRPLD_JSONRPC_URL` \u2014 public xrpld endpoint (Public folder).\n- `CLIO_JSONRPC_URL` \u2014 Clio endpoint (Clio folder).\n- `ADMIN_JSONRPC_URL` \u2014 your own node's admin port (Admin folder; default http://localhost:5005/).\n\nClio forwards writes/queries it doesn't serve to its xrpld node, so a Clio URL can also answer the public methods; you can point XRPLD and CLIO at the same Clio host if you like. Admin methods are never forwarded \u2014 they need a node you operate.\n\nWebSocket-only methods (subscribe, unsubscribe, path_find) are intentionally omitted.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Public xrpld Methods",
+            "item": [
+                {
+                    "name": "Account Methods",
+                    "item": [
+                        {
+                            "name": "account_channels",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about an account's Payment Channels, where the account is the channel's source.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_channels\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"destination_account\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_currencies",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves the currencies an account can send or receive, based on its trust lines.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_currencies\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves information about an account, its activity, and its XRP balance. (`queue` requires `ledger_index: current`.)",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_info\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"current\",\n      \"queue\": true,\n      \"signer_lists\": true\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_lines",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about an account's trust lines, including balances in all non-XRP currencies and assets.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_lines\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_nfts",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns a list of NFToken objects for the specified account.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_nfts\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"validated\",\n      \"limit\": 100\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_objects",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns the raw ledger objects owned by an account (trust lines, offers, escrows, signer lists, etc.).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_objects\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"validated\",\n      \"type\": \"state\",\n      \"limit\": 10\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_offers",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves a list of outstanding offers made by an account as of a particular ledger version.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_offers\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "account_tx",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves a list of transactions that involved the specified account.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"account_tx\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"binary\": false,\n      \"forward\": false,\n      \"ledger_index_max\": -1,\n      \"ledger_index_min\": -1,\n      \"limit\": 5\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "gateway_balances",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Calculates the total balances issued by a given account, optionally excluding operational addresses.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"gateway_balances\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n      \"ledger_index\": \"validated\",\n      \"strict\": true\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "noripple_check",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Provides recommended changes to an account's Default Ripple and No Ripple trust-line settings.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"noripple_check\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"current\",\n      \"limit\": 2,\n      \"role\": \"gateway\",\n      \"transactions\": true\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Ledger Methods",
+                    "item": [
+                        {
+                            "name": "ledger",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves information about the public ledger.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": \"validated\",\n      \"accounts\": false,\n      \"full\": false,\n      \"transactions\": false,\n      \"expand\": false,\n      \"owner_funds\": false\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ledger_closed",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns the unique identifiers of the most recently closed ledger.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_closed\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ledger_current",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns the unique identifiers of the current in-progress ledger.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_current\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ledger_data",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves contents of the specified ledger, a page of ledger objects at a time.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_data\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": \"validated\",\n      \"binary\": true,\n      \"limit\": 5\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ledger_entry",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns a single ledger object in its raw format. This example fetches an AccountRoot; the method is polymorphic (offer, ripple_state, escrow, nft_page, amm, etc.).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_entry\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account_root\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "book_changes",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns a summary of the changes to order books (offer exchanges) that occurred within a single ledger version.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"book_changes\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Transaction Methods",
+                    "item": [
+                        {
+                            "name": "submit",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Applies a signed transaction (tx_blob) and sends it to the network to be included in a future ledger.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"submit\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"tx_blob\": \"1200002280000000240000001E61400000000000...REPLACE_WITH_SIGNED_BLOB\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "submit_multisigned",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Applies a multi-signed transaction and sends it to the network.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"submit_multisigned\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"tx_json\": {\n        \"Account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n        \"Fee\": \"30000\",\n        \"Flags\": 0,\n        \"Sequence\": 360,\n        \"SigningPubKey\": \"\",\n        \"TransactionType\": \"TrustSet\",\n        \"LimitAmount\": {\n          \"currency\": \"USD\",\n          \"issuer\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n          \"value\": \"100\"\n        },\n        \"Signers\": []\n      }\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "transaction_entry",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves information about a single transaction from a specific ledger version.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"transaction_entry\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"tx_hash\": \"C53ECF838647FA5A4C780377025FEC7999AB4182590510CA461444B207AB74A9\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "tx",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves information about a single transaction. In api_version 2 the response wraps transaction fields under tx_json.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"tx\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"transaction\": \"C53ECF838647FA5A4C780377025FEC7999AB4182590510CA461444B207AB74A9\",\n      \"binary\": false\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "simulate",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Executes a dry run of an (unsigned) transaction to preview its metadata and results without submitting it.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"simulate\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"tx_json\": {\n        \"TransactionType\": \"Payment\",\n        \"Account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n        \"Destination\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n        \"Amount\": \"1000000\"\n      },\n      \"binary\": false\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Path and Order Book Methods",
+                    "item": [
+                        {
+                            "name": "amm_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about an Automated Market Maker (AMM) instance. Specify either amm_account or both asset and asset2.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"amm_info\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"asset\": {\n        \"currency\": \"XRP\"\n      },\n      \"asset2\": {\n        \"currency\": \"USD\",\n        \"issuer\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\"\n      },\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "book_offers",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Retrieves a list of offers between two currencies (an order book), also known as the offer book.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"book_offers\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"taker_gets\": {\n        \"currency\": \"XRP\"\n      },\n      \"taker_pays\": {\n        \"currency\": \"USD\",\n        \"issuer\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\"\n      },\n      \"ledger_index\": \"validated\",\n      \"limit\": 10\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "deposit_authorized",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Checks whether one account is authorized to send payments directly to another (Deposit Authorization).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"deposit_authorized\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"source_account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"destination_account\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "nft_buy_offers",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns a list of buy offers for a specified NFToken.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"nft_buy_offers\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"nft_id\": \"000B013A95F14B0044F78A264E41713C64B5F89242540EE208C3098E00000D65\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "nft_sell_offers",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns a list of sell offers for a specified NFToken.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"nft_sell_offers\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"nft_id\": \"000B013A95F14B0044F78A264E41713C64B5F89242540EE208C3098E00000D65\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ripple_path_find",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "A simplified, single-shot version of the path_find method for finding payment paths (path_find itself is WebSocket-only).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ripple_path_find\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"source_account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"destination_account\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n      \"destination_amount\": {\n        \"currency\": \"USD\",\n        \"issuer\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n        \"value\": \"0.001\"\n      },\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Payment Channel Methods",
+                    "item": [
+                        {
+                            "name": "channel_verify",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Verifies a signature that can be used to redeem a specific amount from a payment channel.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"channel_verify\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"amount\": \"1000000\",\n      \"channel_id\": \"5DB01B7FFED6B67E6B0414DED11E051D2EE2B7619CE0EAA6286D67A3A4D5BDB3\",\n      \"public_key\": \"aB44YfzW24VDEJQ2UuLPV2PvqcPCSoLnL7y5M1EzhdW4LnK5xMS3\",\n      \"signature\": \"304402204EF0AFB78AC23ED1C472E74F4299C0C21F1B21D07EFC0A3838A420F76D783A400220154FB11B6F54320666E4C36CA7F686C16A3A0456800BBC43746F34AF50290064\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Server Info Methods",
+                    "item": [
+                        {
+                            "name": "fee",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Reports the current state of the open-ledger requirements for the transaction cost (fee escalation).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"fee\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "feature",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about protocol amendments the server knows about, and whether they are enabled.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"feature\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "manifest",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Reports the current manifest (public info) for a known validator.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"manifest\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"public_key\": \"nHUFE9prPXPrHcG3SkwP1UzAQbSphqyQkQK9ATXLZsfkezhhda3p\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "server_definitions",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns an enumeration of transaction types, fields, and errors (SField/TxType/error definitions) used by the server.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"server_definitions\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "server_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Reports a human-readable version of various information about the server's current state and configuration.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"server_info\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "server_state",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Reports a machine-readable version of the server's current state and configuration.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"server_state\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Utility Methods",
+                    "item": [
+                        {
+                            "name": "ping",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Confirms connectivity with the server; returns an empty result on success.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ping\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "random",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns a random number, for use as a source of entropy for random number generation by clients.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"random\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "version",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns the API versions the server supports (first, last, and default good version).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"version\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Vault Methods",
+                    "item": [
+                        {
+                            "name": "vault_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{XRPLD_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{XRPLD_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about a Single Asset Vault. Specify either vault_id, or owner + seq. Requires the SingleAssetVault amendment (rippled 3.1.0+).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"vault_info\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"vault_id\": \"9E48171960CD9F62C3A7B6559315A510AE544C3F51E02947B5D4DAC8AA66C3BA\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Admin xrpld Methods",
+            "description": "Admin methods require an admin-permitted connection on a node you operate (these requests use the {{ADMIN_JSONRPC_URL}} variable, default http://localhost:5005/). Public endpoints and Clio reject them.",
+            "item": [
+                {
+                    "name": "Key Generation Methods",
+                    "item": [
+                        {
+                            "name": "wallet_propose",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Generates a key pair and address for a new account (or from a supplied passphrase/seed).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"wallet_propose\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"key_type\": \"secp256k1\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "validation_create",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Generates cryptographic keys for a rippled validator to use.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"validation_create\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Logging and Data Management Methods",
+                    "item": [
+                        {
+                            "name": "can_delete",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Allows online deletion of ledgers up to a specific ledger (requires online_delete configured).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"can_delete\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"can_delete\": \"now\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ledger_cleaner",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Instructs the ledger cleaner service to check for corrupted or missing data and repair it.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_cleaner\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger\": 1000000,\n      \"full\": true\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "ledger_request",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Queries connected peers to retrieve a specific ledger version from the network.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_request\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": 1000000\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "log_level",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Gets or sets the log verbosity of the server (optionally per partition).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"log_level\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"severity\": \"debug\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "logrotate",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Closes and reopens the log file, for use with an external log-rotation tool.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"logrotate\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Server Control Methods",
+                    "item": [
+                        {
+                            "name": "ledger_accept",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Closes and advances the ledger (stand-alone mode only).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"ledger_accept\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "stop",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Gracefully shuts down the server.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"stop\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Signing Methods",
+                    "item": [
+                        {
+                            "name": "sign",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Signs a transaction locally using a supplied secret (admin/private servers only). Prefer signing offline in production.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"sign\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"tx_json\": {\n        \"TransactionType\": \"Payment\",\n        \"Account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n        \"Destination\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n        \"Amount\": \"1000000\"\n      },\n      \"secret\": \"REPLACE_WITH_SECRET\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "sign_for",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Provides one signature for a multi-signed transaction (admin/private servers only).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"sign_for\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n      \"tx_json\": {\n        \"TransactionType\": \"TrustSet\",\n        \"Account\": \"rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh\",\n        \"LimitAmount\": {\n          \"currency\": \"USD\",\n          \"issuer\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n          \"value\": \"100\"\n        },\n        \"Sequence\": 360,\n        \"Fee\": \"30000\"\n      },\n      \"secret\": \"REPLACE_WITH_SECRET\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "channel_authorize",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Creates a signature that can be used to redeem a specific amount from a payment channel (admin only).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"channel_authorize\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"channel_id\": \"5DB01B7FFED6B67E6B0414DED11E051D2EE2B7619CE0EAA6286D67A3A4D5BDB3\",\n      \"amount\": \"1000000\",\n      \"secret\": \"REPLACE_WITH_SECRET\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Peer Management Methods",
+                    "item": [
+                        {
+                            "name": "connect",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Forces the server to connect to a specific peer (stand-alone/admin).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"connect\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ip\": \"192.170.145.88\",\n      \"port\": 51235\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "peer_reservations_add",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Adds or updates a reserved slot for a specific peer.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"peer_reservations_add\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"public_key\": \"n9MqiExBcoG19UXwoLjBJnhsxEhAZMuWwJDRdkyDz1zwjbFhkKq5\",\n      \"description\": \"Example reservation\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "peer_reservations_del",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Removes a reserved slot for a specific peer.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"peer_reservations_del\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"public_key\": \"n9MqiExBcoG19UXwoLjBJnhsxEhAZMuWwJDRdkyDz1zwjbFhkKq5\"\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "peer_reservations_list",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Lists the reserved peer slots configured on the server.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"peer_reservations_list\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "peers",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about the peer-to-peer connections the server currently has.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"peers\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Status and Debugging Methods",
+                    "item": [
+                        {
+                            "name": "consensus_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Provides information about the state of the consensus process as it happens.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"consensus_info\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "fetch_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about the server's sync with the network, including ledgers being fetched.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"fetch_info\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"clear\": false\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "get_counts",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Provides statistics about the server's internal counters and memory usage.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"get_counts\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"min_count\": 100\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "print",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns the current internal state of various server subsystems (admin/debug).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"print\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "validator_info",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns the validation settings of the server, if it is configured as a validator.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"validator_info\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "validator_list_sites",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns information about the sites the server uses to fetch validator lists (UNLs).",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"validator_list_sites\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "validators",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{ADMIN_JSONRPC_URL}}",
+                                    "host": [
+                                        "{{ADMIN_JSONRPC_URL}}"
+                                    ]
+                                },
+                                "description": "Returns human-readable information about the current validators the server trusts.",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"method\": \"validators\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Clio Methods",
+            "description": "Methods served by Clio. These requests use the {{CLIO_JSONRPC_URL}} variable.",
+            "item": [
+                {
+                    "name": "server_info (Clio)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio's server_info includes an extra `clio` section describing the Clio server, plus the `rippled` section it proxies.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"server_info\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ledger (Clio)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio serves ledger data directly from its database. Same interface as rippled's ledger method.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"ledger\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"ledger_index\": \"validated\",\n      \"transactions\": true,\n      \"expand\": false\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "nft_info",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio-only. Returns the current state of an individual NFToken (owner, URI, flags, issuer, taxon).",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"nft_info\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"nft_id\": \"000B013A95F14B0044F78A264E41713C64B5F89242540EE208C3098E00000D65\",\n      \"ledger_index\": \"validated\"\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "nft_history",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio-only. Returns the transaction history for a specified NFToken.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"nft_history\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"nft_id\": \"000B013A95F14B0044F78A264E41713C64B5F89242540EE208C3098E00000D65\",\n      \"ledger_index_min\": -1,\n      \"ledger_index_max\": -1,\n      \"binary\": false,\n      \"forward\": false,\n      \"limit\": 20\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "nfts_by_issuer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio-only. Returns a list of NFTokens issued by the specified account, optionally filtered by taxon.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"nfts_by_issuer\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"issuer\": \"rP9jPyP5kyvFRb6ZiRghAGw5u8SGAmU4bd\",\n      \"ledger_index\": \"validated\",\n      \"limit\": 50\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "mpt_holders",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio-only. Returns all holders of a given Multi-Purpose Token (MPT) issuance and their balances.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"mpt_holders\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"mpt_issuance_id\": \"05EECEBE97A7D635DE2393068691A015FED5A89AD203F5AA\",\n      \"ledger_index\": \"validated\",\n      \"limit\": 50\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ledger_index",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio-only. Returns the ledger index (and hash) that was current at the given ISO 8601 timestamp.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"ledger_index\",\n  \"params\": [\n    {\n      \"api_version\": 2,\n      \"date\": \"2026-01-01T00:00:00Z\"\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "ledger_range",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{CLIO_JSONRPC_URL}}",
+                            "host": [
+                                "{{CLIO_JSONRPC_URL}}"
+                            ]
+                        },
+                        "description": "Clio-only (undocumented on xrpl.org). Returns the min and max ledger indexes available in the Clio node's database.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"ledger_range\",\n  \"params\": [\n    {\n      \"api_version\": 2\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "XRPLD_JSONRPC_URL",
+            "value": "https://s1.ripple.com:51234/",
+            "type": "string"
+        },
+        {
+            "key": "CLIO_JSONRPC_URL",
+            "value": "https://s2.ripple.com:51234/",
+            "type": "string"
+        },
+        {
+            "key": "ADMIN_JSONRPC_URL",
+            "value": "http://localhost:5005/",
+            "type": "string"
+        }
+    ]
+}
