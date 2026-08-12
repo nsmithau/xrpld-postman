@@ -507,6 +507,32 @@ collection = OrderedDict([
         folder("Clio Methods", clio_methods,
                "Methods served by Clio. These requests use the {{CLIO_JSONRPC_URL}} variable."),
     ]),
+    ("event", [
+        OrderedDict([
+            ("listen", "test"),
+            ("script", OrderedDict([
+                ("type", "text/javascript"),
+                ("exec", [
+                    "// Collection-level test: flag deprecated request fields (warning id 2004).",
+                    "// Runs after every request. Skips non-JSON / transport-level responses.",
+                    "var body = null;",
+                    "try { body = pm.response.json(); } catch (e) { body = null; }",
+                    "",
+                    "if (body) {",
+                    "    var warnings = body.warnings || (body.result && body.result.warnings) || [];",
+                    "    var deprecations = warnings.filter(function (w) { return w && w.id === 2004; });",
+                    "    var messages = deprecations.map(function (w) { return w.message; }).join(' | ');",
+                    "",
+                    "    if (deprecations.length) { console.warn('DEPRECATION (2004): ' + messages); }",
+                    "",
+                    "    pm.test('No deprecated (2004) request fields', function () {",
+                    "        pm.expect(deprecations.length, messages).to.eql(0);",
+                    "    });",
+                    "}",
+                ]),
+            ])),
+        ]),
+    ]),
     ("variable", [
         OrderedDict([("key", "XRPLD_JSONRPC_URL"), ("value", "https://s1.ripple.com:51234/"), ("type", "string")]),
         OrderedDict([("key", "CLIO_JSONRPC_URL"), ("value", "https://s2.ripple.com:51234/"), ("type", "string")]),

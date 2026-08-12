@@ -121,6 +121,14 @@ notes for the full list.
 - Example accounts, NFT IDs, and hashes are illustrative; swap in live values before
   sending.
 
+## Deprecation checks
+
+The collection carries a **collection-level test script** that runs after every
+request. If a response includes an XRPL deprecation warning (`warnings[].id === 2004`
+— "field X is deprecated"), the test fails and logs the message to the Postman
+console, so deprecated request fields get caught automatically as the APIs evolve.
+Other warnings (e.g. Clio's informational `2001`) are ignored.
+
 ## Regenerating
 
 The collection and environment files are generated from [`build.py`](build.py):
